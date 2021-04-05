@@ -1,0 +1,14 @@
+.container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   border-bottom: 1px solid #2a363b;
+}
+
+.appear {
+   transform: translateX(-100%);
+}
+.appearActive {
+   transform: translateX(0);
+   transition: transform 500ms linear;
+}

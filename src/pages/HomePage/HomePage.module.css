@@ -1,0 +1,22 @@
+.Title {
+   color: red;
+}
+
+.appear {
+   transform: translateX(-100%);
+}
+
+.appear-active {
+   transform: translateX(0);
+   transition: transform 500ms linear;
+}
+
+.text {
+   display: flex;
+   flex-direction: column;
+   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+   padding: 10px 45px;
+   margin-bottom: 20px;
+   border-radius: 2px;
+   background-color: #ffffff;
+}
