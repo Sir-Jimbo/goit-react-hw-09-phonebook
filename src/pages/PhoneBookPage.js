@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from '../components/ContactForm/ContactForm';
 import Filter from '../components/Filter/Filter';
 import ContactList from '../components/ContactList/ContactList';
@@ -11,56 +11,44 @@ import Spinner from '../components/Spinner/Spinner';
 import Notification from '../components/Notification/Notification';
 import selectors from '../redux/phonebook/phonebook-selectors';
 
-class PhoneBookPage extends Component {
+export default function PhoneBookPage() {
+    const contacts = useSelector(selectors.getAllContacts);
+    const isLoadingContacts = useSelector(selectors.getLoading);
+    const error = useSelector(selectors.getError);
+    const dispatch = useDispatch();
 
-    static propTypes = {
-        contacts: PropTypes.arrayOf(PropTypes.object),
-        fetchContacts: PropTypes.func,
-        isLoadingContacts: PropTypes.bool,
-        error: PropTypes.string
-    };
+    useEffect(() => {
+        dispatch(operations.fetchContacts());
+    }, [dispatch]);
+    return (
+        <>
+            <Logo />
 
-    componentDidMount() {
-        this.props.fetchContacts();
+            <Notification
+                message={error} />
 
-    };
+            <ContactForm />
 
-    render() {
-        return (
-            <>
-                <Logo />
+            <Filter />
 
-                <Notification
-                    message={this.props.error} />
+            {isLoadingContacts && <Spinner />}
 
-                <ContactForm />
-
-                <Filter />
-
-                {this.props.isLoadingContacts && <Spinner />}
-
-                <CSSTransition
-                    in={this.props.contacts.length > 0}
-                    timeout={0}
-                    ommountOnExit>
-                    <ContactList />
-                </CSSTransition>
+            <CSSTransition
+                in={contacts.length > 0}
+                timeout={0}
+                ommountOnExit>
+                <ContactList />
+            </CSSTransition>
 
 
 
-            </>
-        );
-    };
+        </>
+    );
 };
 
-const mapStateToProps = (state) => ({
-    contacts: selectors.getAllContacts(state),
-    isLoadingContacts: selectors.getLoading(state),
-    error: selectors.getError(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-    fetchContacts: () => dispatch(operations.fetchContacts())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PhoneBookPage);
+PhoneBookPage.propTypes = {
+    contacts: PropTypes.arrayOf(PropTypes.object),
+    fetchContacts: PropTypes.func,
+    isLoadingContacts: PropTypes.bool,
+    error: PropTypes.string
+};

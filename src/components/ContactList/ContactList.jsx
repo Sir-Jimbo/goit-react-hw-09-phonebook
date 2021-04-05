@@ -1,12 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import operations from '../../redux/phonebook/phonebook-operations';
 import selectors from '../../redux/phonebook/phonebook-selectors';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Contact from 'components/Contact/Contact';
 import s from './ContactList.module.css';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+export default function ContactList() {
+   const dispatch = useDispatch();
+   const contacts = useSelector(selectors.getVisibleContacts);
+   const onDeleteContact = id => dispatch(operations.deleteContact(id));
    return (
       <TransitionGroup
          component="ul"
@@ -31,13 +34,3 @@ const ContactList = ({ contacts, onDeleteContact }) => {
 
    )
 }
-
-const mapStateToProps = (state) => ({
-   contacts: selectors.getVisibleContacts(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-   onDeleteContact: id => dispatch(operations.deleteContact(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
