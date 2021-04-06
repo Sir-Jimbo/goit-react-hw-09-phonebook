@@ -3,15 +3,15 @@ import { Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Layout from 'components/Layout/Layout';
 import Section from 'components/Section/Section';
-import authOperations from './redux/auth/auth-operations';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import PublicRoute from './components/PublicRoute/PublicRoute';
-import Spinner from './components/Spinner/Spinner';
+import authOperations from '../../redux/auth/auth-operations';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import PublicRoute from '../PublicRoute/PublicRoute';
+import Spinner from '../Spinner/Spinner';
 
-const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
-const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
-const PhoneBookPage = lazy(() => import('./pages/PhoneBookPage'));
+const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
+const RegisterPage = lazy(() => import('../../pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
+const PhoneBookPage = lazy(() => import('../../pages/PhoneBookPage'));
 
 export default function App() {
 
